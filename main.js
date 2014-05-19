@@ -1,18 +1,30 @@
 window.onload = function() {
 
-  function getX() {
-    var xStr = document.getElementById('inputX').value;
+  function getInteger(inputElement) {
+    var xStr = inputElement.value;
     var xNum = +xStr;
-    if(Number.isInteger(xNum)) {
-      return xNum;
-    } else {
+    if(!Number.isInteger(xNum) || whiteSpace(xStr)) {
       return false;
+    } else {
+      return xNum;
     }
   };
 
+  function getX() {
+    return getInteger(document.getElementById('inputX'));
+  };
+
   function getY() {
-    return document.getElementById('inputY').value;
-    // return parseInt(yStr);
+    return getInteger(document.getElementById('inputY'));
+  };
+
+  function whiteSpace(str) {
+    //if str contains 1 or more non-white space chars , then return false
+    //if str is empty, then return false
+    if (/\S+/.test(str) || str.length === 0) {
+      return false;
+    } 
+    return true;
   };
 
   function setZ(val) {
@@ -21,26 +33,31 @@ window.onload = function() {
 
   document.getElementById('addButton').addEventListener('click', addButtonClicked);
   function addButtonClicked() {
-    var z = parseInt(getX()) + parseInt(getY());
-    setZ(z);
+    if(Number.isInteger(getX()) && Number.isInteger(getY())) {
+      var z = getX() + getY();
+      setZ(z);
+    }
   };
 
   document.getElementById('subtractButton').addEventListener('click', subtractButtonClicked);
   function subtractButtonClicked() {
-    var z = getX() - getY();
-    setZ(z);
+    if(Number.isInteger(getX()) && Number.isInteger(getY())) {
+      var z = getX() - getY();
+      setZ(z);
+    }
   };
 
-  document.getElementById('inputX').addEventListener('keyup', function() {
-    var myNum = parseInt(getX());
-    console.log(myNum);
-    if(!getX()) {
-      
-    }
-  });
-
-  function checkInt(val) {
-    return Number.isInteger(val);
-  }
+  function checkInputForInteger(inputElement) {
+    inputElement.addEventListener('input', function() {
+      var myInt = getInteger(inputElement);
+      if(Number.isInteger(myInt)) {
+        inputElement.parentElement.getElementsByClassName('feedback')[0].textContent = '';
+      } else {
+        inputElement.parentElement.getElementsByClassName('feedback')[0].textContent = 'Please enter a valid integer';
+      }
+    });
+  };
+  checkInputForInteger(document.getElementById('inputX'));
+  checkInputForInteger(document.getElementById('inputY'));
 
 };
