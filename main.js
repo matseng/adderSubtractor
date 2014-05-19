@@ -2,12 +2,17 @@ window.onload = function() {
 
   function getX() {
     var xStr = document.getElementById('inputX').value;
-    return parseInt(xStr);
+    var xNum = +xStr;
+    if(Number.isInteger(xNum)) {
+      return xNum;
+    } else {
+      return false;
+    }
   };
 
   function getY() {
-    var yStr = document.getElementById('inputY').value;
-    return parseInt(yStr);
+    return document.getElementById('inputY').value;
+    // return parseInt(yStr);
   };
 
   function setZ(val) {
@@ -16,7 +21,7 @@ window.onload = function() {
 
   document.getElementById('addButton').addEventListener('click', addButtonClicked);
   function addButtonClicked() {
-    var z = getX() + getY();
+    var z = parseInt(getX()) + parseInt(getY());
     setZ(z);
   };
 
@@ -27,11 +32,10 @@ window.onload = function() {
   };
 
   document.getElementById('inputX').addEventListener('keyup', function() {
-    var myNum = getX();
+    var myNum = parseInt(getX());
     console.log(myNum);
-    if(!Number.isInteger(getX())){
-      console.log(getX());
-      console.log('please enter an integer');
+    if(!getX()) {
+      
     }
   });
 
