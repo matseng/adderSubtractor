@@ -19,8 +19,9 @@ window.onload = function() {
   };
 
   function whiteSpace(str) {
-    //if str contains 1 or more non-white space chars , then return false
+    //if str contains 1 or more non-white space chars, then return false
     //if str is empty, then return false
+    //Example: "  " --> returns true
     if (/\S+/.test(str) || str.length === 0) {
       return false;
     } 
